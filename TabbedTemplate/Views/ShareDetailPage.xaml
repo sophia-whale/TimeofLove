@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             BindingContext="{Binding DiaryShareViewModel, Source={StaticResource ViewModelLocator}}"
+             services:NavigationContext.NavigationParameter="{Binding Diary}"
+             xmlns:services="clr-namespace:TabbedTemplate.Services;assembly=TabbedTemplate"
+             xmlns:lc="clr-namespace:TabbedTemplate.Converters;assembly=TabbedTemplate"
+             xmlns:render="clr-namespace:TabbedTemplate.Renders;assembly=TabbedTemplate"
+             xmlns:forms="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:views="clr-namespace:TabbedTemplate.Views;assembly=TabbedTemplate"
+             x:Class="TabbedTemplate.Views.ShareDetailPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <lc:SKPaintSurfaceEventArgsToItemConverter x:Key="ArgsToItem" />
+            <render:ShareCanvasViewRender x:Key="ShareCanvasViewRender" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid BackgroundColor="#F9F7E8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Frame 
+                Grid.ColumnSpan="2"
+                HasShadow="True"
+                Margin="8, 12, 8, 0">
+                <views:SKRenderView x:Name="Canvas" Render="{Binding Render}"/>
+            </Frame>
+
+            <Button Grid.Row="1"
+                    Text="Pick a photo"
+                    CornerRadius="5"
+                    FontSize="16"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    BackgroundColor="#FF8B8B"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand"
+                    Command="{Binding SelectImageCommand}"
+                    CommandParameter="{Binding  }"/>
+
+            <Button Grid.Row="1"
+                    Grid.Column="1"
+                    Text="Save photo"
+                    CornerRadius="5"
+                    FontSize="16"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    BackgroundColor="#63ACDD"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand"
+                    Command="{Binding SaveShareImageCommand}"/>
+
+            <ScrollView Grid.Row="2"
+                        Grid.ColumnSpan="2"
+                        Margin="20, 0, 20, 0"
+                        WidthRequest="80"
+                        HeightRequest="100"
+                        VerticalOptions="StartAndExpand"
+                        HorizontalScrollBarVisibility="Always"
+                        Orientation="Horizontal">
+                <StackLayout Orientation="Horizontal">
+                    <ImageButton WidthRequest="100" Aspect="AspectFill" Source="hearts.png" Command="{Binding HeartsPaintCommand}"/>
+                    <ImageButton WidthRequest="100" Aspect="AspectFill" Source="snow.jpg" Command="{Binding SnowPaintCommand}"/>
+                    <ImageButton WidthRequest="100" Aspect="AspectFill" Source="trees.png" Command="{Binding TreesPaintCommand}"/>
+                    <ImageButton WidthRequest="100" Aspect="AspectFill" Source="whiteCloud.jpg" Command="{Binding WhiteCloudPaintCommand}"/>
+                    <ImageButton WidthRequest="100" Aspect="AspectFill" Source="blue.jpg" Command="{Binding BluePaintCommand}"/>
+                    <ImageButton WidthRequest="100" Aspect="AspectFill" Source="moon.jpg" Command="{Binding MoonPaintCommand}"/>
+                    <ImageButton WidthRequest="100" Aspect="AspectFill" Source="pinkCloud.jpg" Command="{Binding PinkCloudPaintCommand}"/>
+                    <!--BindableLayout.ItemTemplate 
+                    BindableLayout.ItemsSource="{Binding FontTypeImageCollection}">
+                        <DataTemplate>
+                            <Image Source=""/>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate-->
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TabbedTemplate.ViewModels;assembly=TabbedTemplate"
+             xmlns:models="clr-namespace:TabbedTemplate.Models;assembly=TabbedTemplate"
+             xmlns:richtexteditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
+             xmlns:core="clr-namespace:SampleBrowser.Core;assembly=SampleBrowser.Core"
+             xmlns:views="clr-namespace:TabbedTemplate.Views;assembly=TabbedTemplate"
+             xmlns:converters="clr-namespace:TabbedTemplate.Converters;assembly=TabbedTemplate"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:services="clr-namespace:TabbedTemplate.Services;assembly=TabbedTemplate"
+             BindingContext="{Binding  DiaryDetailViewModel, Source={StaticResource ViewModelLocator}}"
+             services:NavigationContext.NavigationParameter="{Binding Diary}"
+             x:Class="TabbedTemplate.Views.DiaryDetailPage"
+             Title="Add Diary">
+    <ContentPage.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="Appearing">
+            <behaviors:ActionCollection>
+                <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+            </behaviors:ActionCollection>
+        </behaviors:EventHandlerBehavior>
+    </ContentPage.Behaviors>
+
+    <NavigationPage.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ImageButton
+                Grid.Column="1"
+                Margin="12, 0, 0, 0"
+                HorizontalOptions="EndAndExpand"
+                VerticalOptions="Center"
+                HeightRequest="30"
+                WidthRequest="30"
+                Source="cc_share.png"
+                BackgroundColor="#F9F7E8"
+                Command="{Binding ShareNavigationCommand}" />
+
+            <ImageButton 
+                Grid.Column="2"
+                HorizontalOptions="EndAndExpand"
+                VerticalOptions="Center"
+                HeightRequest="30"
+                WidthRequest="30"
+                Source="finish.png"
+                BackgroundColor="#F9F7E8"
+                Clicked="Button_Click"
+                Command="{Binding AddDiaryCommand}"></ImageButton>
+
+
+        </Grid>
+    </NavigationPage.TitleView>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BytesToImageFieldConverter x:Key="BytesToImageSource" />
+            <converters:ImageSourceToBoolConverter x:Key="ImageSourceToBool" />
+            <converters:NegativeImageSourceToBoolConverter x:Key="Negative"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+
+        <Grid BackgroundColor="#F9F7E8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--<Button Grid.Row="0" Grid.Column="0" x:Name="takePhoto" Text="照照片" Command="{Binding TakePhotoCommand}"/>
+                <Button Grid.Row="0" Grid.Column="1" x:Name="pickPhoto" Text="从相册选择图片" Command="{Binding PickPhotoCommand}"/>-->
+            <StackLayout Grid.Row="0" Grid.ColumnSpan="3">
+                <CarouselView x:Name="carouselView"   WidthRequest="360"  ItemsSource="{Binding ImageViewModelCollection}" IndicatorView="indicatorView">
+                    
+                    <CarouselView.ItemTemplate >
+                        <DataTemplate>
+                            <Grid >
+                                <Grid IsVisible="{Binding ImageSource,Converter={StaticResource Negative},Mode=OneWay}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                            <RowDefinition Height="2*"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <ImageButton Grid.Row="1" Grid.Column="1" HeightRequest="60" WidthRequest="60" Source="add.png" BackgroundColor="WhiteSmoke" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding AddCommand}"/>
+                                    </Grid>
+                                </Grid>
+                                <Grid IsVisible="{Binding ImageSource,Converter={StaticResource ImageSourceToBool},Mode=OneWay}">
+                                    <Image  x:Name="image" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Source="{Binding ImageSource,Converter={StaticResource BytesToImageSource},Mode=OneWay} " />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                            <RowDefinition Height="2*"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <ImageButton Grid.Row="1" Grid.Column="1" HeightRequest="60" WidthRequest="60" CornerRadius="50" Source="minus_gray.png" BackgroundColor="WhiteSmoke" HorizontalOptions="Center" VerticalOptions="Center" Command="{Binding RemoveCommand}"/>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <IndicatorView x:Name="indicatorView"
+                           IndicatorsShape="Square"
+                           IndicatorColor="LightGray"
+                           SelectedIndicatorColor="DarkGray"
+                           HorizontalOptions="Center"
+                           Margin="0,0,0,0" />
+            </StackLayout>
+            <!--<ImageButton
+>>>>>>> 34010f7239cb999b6631c091ee083b4bf8a22bea
+                Grid.Row="2"
+                Source="language_outline.png"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center"
+                HeightRequest="30" 
+                WidthRequest="30" />
+
+            <ImageButton
+                Grid.Row="2"
+                Grid.Column="1"
+                Source="pic.png"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center"
+                HeightRequest="30" 
+                WidthRequest="30" />-->
+
+
+            <Entry 
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    FontAttributes="Bold"
+                    HorizontalTextAlignment="Center"
+                    BackgroundColor="#F9F7E8"
+                    Placeholder="为这篇日记起一个标题吧"
+                    Text="{Binding Title}"
+                    x:Name="TitleEntry" />
+
+            <StackLayout
+            Grid.Row="2" Grid.ColumnSpan="3">
+
+                <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                    <richtexteditor:SfRichTextEditor 
+                        x:Name="RTE"
+                        PlaceHolder="回忆美好的一天写下来吧"
+                        HtmlText="{Binding Editor}"
+                        VerticalOptions="FillAndExpand" 
+                        HorizontalOptions="FillAndExpand" 
+                        BackgroundColor="#F9F7E8">
+                        <richtexteditor:SfRichTextEditor.ToolbarSettings>
+                            <richtexteditor:ToolbarSettings 
+                                BackgroundColor="#F9F7E8"
+                                ToolbarBackgroundColor="#F9F7E8"
+                                TextColor="#FF8B8B"/>
+                        </richtexteditor:SfRichTextEditor.ToolbarSettings>
+                    </richtexteditor:SfRichTextEditor>
+                </Grid>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TabbedTemplate.ViewModels.DiaryShareViewModel">
+    <Position X="6.75" Y="2" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>MABADkgABSEgIQRUBQgAlDAQAABAShARCJAAAgAggBk=</HashCode>
+      <FileName>ViewModels\DiaryShareViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TabbedTemplate.Renders.ShareCanvasViewRender" BaseTypeListCollapsed="true">
+    <Position X="10" Y="2" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="TabbedTemplate.Renders.ShareCanvasViewRender.Line" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Renders\ShareCanvasViewRender.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAADgAABQAAAAAQAAgAAAAAAABAUhAAiAAAAAAAgYk=</HashCode>
+      <FileName>Renders\ShareCanvasViewRender.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" Collapsed="true" />
+  </Class>
+  <Class Name="TabbedTemplate.Views.SKRenderView">
+    <Position X="14" Y="1.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAEAAABAAAAAAAAAAAAAAAAAABAAAQAAAAA=</HashCode>
+      <FileName>Views\SKRenderView.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Render" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GalaSoft.MvvmLight.ViewModelBase" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SkiaSharp.Views.Forms.SKCanvasView" Collapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="TabbedTemplate.Renders.IRender" Collapsed="true">
+    <Position X="14.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Renders\IRender.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

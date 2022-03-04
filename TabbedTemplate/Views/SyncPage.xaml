@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TabbedTemplate.Views.SyncPage"
+             xmlns:b="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:lc="clr-namespace:TabbedTemplate.Converters;assembly=TabbedTemplate"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             BindingContext="{Binding SyncPageViewModel ,Source= {StaticResource ViewModelLocator}}"
+             NavigationPage.HasNavigationBar="false">
+
+    <ContentPage.Behaviors>
+        <b:EventHandlerBehavior EventName="Appearing">
+            <b:ActionCollection>
+                <b:InvokeCommandAction Command="{Binding PageAppearingCommand}"/>
+            </b:ActionCollection>
+        </b:EventHandlerBehavior>
+    </ContentPage.Behaviors>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xamanimation:HeartAnimation
+                x:Key="HeartAnimation"
+                Target="{x:Reference Heart}"/>
+            <lc:NegativeBoolConverter x:Key="Negative" />
+            <lc:LastSyncToStringConverter x:Key="SyncToString" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+
+        <Grid BackgroundColor="#F9F7E8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="6*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.ColumnSpan="2"  Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1"
+                        HorizontalOptions="Start" 
+                        VerticalOptions="Start" 
+                        Text="恋 爱 时 光" 
+                        TextColor="#FF8B8B"
+                        FontFamily="littleSide"
+                        BackgroundColor="#F9F7E8"
+                        HeightRequest="50"
+                        FontSize="32">
+                    <Button.Triggers>
+                        <EventTrigger Event="Clicked">
+                            <xamanimation:BeginAnimation
+                                Animation="{StaticResource HeartAnimation}" />
+                        </EventTrigger>
+                    </Button.Triggers>
+                </Button>
+                <Image
+                    Grid.Column="0"
+                    x:Name="Heart"
+                    WidthRequest="40"
+                    Source="heart.png"
+                    HorizontalOptions="EndAndExpand"
+                    VerticalOptions="Center">
+
+                </Image>
+            </Grid>
+            <Label Grid.Row="1" Grid.Column="1" Text="同步到OneDrive"
+                   FontSize="Large"
+                   HorizontalTextAlignment="Start"
+                   Margin="0, 20,0,0"
+                   FontFamily="littleSide"
+                   TextColor="#FF8B8B"/>
+            <Image 
+                Grid.Column="0"
+                Grid.Row="1"
+                HorizontalOptions="EndAndExpand" 
+                VerticalOptions="FillAndExpand" 
+                BackgroundColor="#F9F7E8"
+                Aspect="AspectFill" 
+                Source="OneDrive.png" />
+            <StackLayout Grid.Row="2" Grid.ColumnSpan="2" IsVisible="{Binding OneDriveLoading}">
+                <ActivityIndicator IsRunning="{Binding OneDriveLoading}" />
+                <Label Text="{Binding OneDriveStatus}"
+                                   TextColor="#FF8B8B"
+                                   FontFamily="littleSide"
+                                   HorizontalOptions="Center" />
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.ColumnSpan="2"
+                         IsVisible="{Binding OneDriveLoading, Converter={StaticResource Negative}}">
+                <StackLayout
+                                IsVisible="{Binding OneDriveSignedIn, Converter={StaticResource Negative}}">
+                    <Label Text="尚未登录到OneDrive。"
+                                       TextColor="#FF8B8B"
+                                       FontFamily="littleSide"
+                                       HorizontalOptions="Center"/>
+                    <Button Text="同步到我的OneDrive"
+                                        CornerRadius="5"
+                                        FontSize="20"
+                                        TextColor="White"
+                                        FontAttributes="Bold"
+                                        BackgroundColor="#FF8B8B"
+                                        Margin="8, 4, 8, 4"
+                                        Command="{Binding OneDriveSignInCommand}" />
+
+                </StackLayout>
+                <StackLayout IsVisible="{Binding OneDriveSignedIn}">
+                    <Label Text="已经登录到OneDrive。"
+                                       TextColor="#FF8B8B"
+                                       FontFamily="littleSide"
+                                       HorizontalOptions="Center"/>
+                    <Label
+                                    Text="{Binding LastOneDriveSyncTime, 
+                        Converter={StaticResource SyncToString}}"
+                                    TextColor="#FF8B8B"
+                                    FontFamily="littleSide"
+                                    HorizontalOptions="Center"/>
+                    <Button 
+                                Margin="8, 4, 8, 4"
+                                Text="OneDrive数据同步"
+                                TextTransform="None"
+                                CornerRadius="5"
+                                FontSize="20"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                BackgroundColor="#FF8B8B"
+                                Command="{Binding OneDriveSyncCommand}" />
+                    <Button 
+                                Margin="8, 0, 8, 0"
+                                Text="退出OneDrive登录"
+                                TextTransform="None"
+                                CornerRadius="5"
+                                FontSize="20"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                BackgroundColor="#63ACDD"
+                                Command="{Binding OneDriveSignOutCommand}" />
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+    <!--<Button
+                Margin="8, 20, 8, 0"
+                Text="同步到我的OneDrive"
+                CornerRadius="5"
+                FontSize="24"
+                TextColor="White"
+                FontAttributes="Bold"
+                BackgroundColor="#EC6091"
+                Command="{Binding OneDriveSignInCommand}"></Button>
+        </StackLayout>
+    </ContentPage.Content>-->
+</ContentPage>

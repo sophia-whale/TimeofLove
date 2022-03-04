@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"
+            xmlns:views="clr-namespace:TabbedTemplate.Views"
+            xmlns:androidSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            x:Class="TabbedTemplate.Views.MainPage"
+            androidSpecific:TabbedPage.ToolbarPlacement="Bottom"
+            androidSpecific:TabbedPage.BarItemColor="#F9F7E8"
+            BarBackgroundColor="#FF8B8B"
+            Title="恋爱时光">
+
+
+    <TabbedPage.Children>
+        <NavigationPage Title="日记"  >
+            <NavigationPage.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="iOS" Value="tab_feed.png"/>
+                    <On Platform="Android" Value="diaryHeart.png"/>
+                </OnPlatform>
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:DiariesPage Title="日记" />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="计时" >
+            <NavigationPage.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="iOS" Value="tab_feed.png"/>
+                    <On Platform="Android" Value="memoryDay.png"/>
+                </OnPlatform>
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:MemorialDaysPage Title="计时"/>
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="我的">
+            <NavigationPage.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="iOS" Value="tab_about.png"/>
+                    <On Platform="Android" Value="my.png"/>
+                </OnPlatform>
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:SyncPage Title="我的">
+                </views:SyncPage>
+            </x:Arguments>
+        </NavigationPage>
+    </TabbedPage.Children>
+    
+</TabbedPage>

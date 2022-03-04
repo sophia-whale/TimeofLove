@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:s="clr-namespace:Xamarin.Forms.Extended;assembly=Xamarin.Forms.Extended.InfiniteScrolling"
+             xmlns:vm="clr-namespace:TabbedTemplate.ViewModels;assembly=TabbedTemplate"
+             xmlns:models="clr-namespace:TabbedTemplate.Models;assembly=TabbedTemplate"
+             xmlns:lc="clr-namespace:TabbedTemplate.Converters;assembly=TabbedTemplate"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             BindingContext="{Binding  DiariesViewModel,Source={StaticResource ViewModelLocator}}"
+             NavigationPage.HasNavigationBar="false"
+             x:Class="TabbedTemplate.Views.DiariesPage">
+
+    <!--<NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" VerticalOptions="Center" Spacing="10">
+            <Label HorizontalOptions="CenterAndExpand" VerticalTextAlignment="Center" Text="恋爱时光" TextColor="White" FontFamily="sans" FontSize="24"/>
+
+            -->
+    <!--ImageButton
+                Margin="0,0,20,0"
+                Source="day.png"  
+                BackgroundColor="White"
+                CornerRadius="20" 
+                BorderColor="#EC6091"
+                HorizontalOptions="EndAndExpand"
+                VerticalOptions="Center"
+                HeightRequest="40" 
+                WidthRequest="40"/-->
+    <!--
+        </StackLayout>
+    </NavigationPage.TitleView>-->
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xamanimation:HeartAnimation
+                x:Key="HeartAnimation"
+                Target="{x:Reference Heart}"/>
+            <lc:HtmlStringToStringConverter x:Key="HtmlToString" />
+            <lc:DateToYearConverter x:Key="DateToYear"/>
+            <lc:DateToMonthConverter x:Key="DateToMonth"/>
+            <lc:DateToDayConverter x:Key="DateToDay"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="Appearing">
+            <behaviors:ActionCollection>
+                <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+            </behaviors:ActionCollection>
+        </behaviors:EventHandlerBehavior>
+    </ContentPage.Behaviors>
+
+    <ContentPage.Content>
+        <Grid BackgroundColor="#F9F7E8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackLayout
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1"
+                    HorizontalOptions="Start" 
+                    VerticalOptions="Start" 
+                    Text="恋 爱 时 光" 
+                    TextColor="#FF8B8B"
+                    FontFamily="littleSide"
+                    BackgroundColor="#F9F7E8"
+                    HeightRequest="70"
+                    FontSize="32">
+                        <Button.Triggers>
+                            <EventTrigger Event="Clicked">
+                                <xamanimation:BeginAnimation
+                                Animation="{StaticResource HeartAnimation}" />
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+                    <Image
+                             Grid.Column="0"
+                             x:Name="Heart"
+                             WidthRequest="40"
+                             Source="heart.png"
+                             HorizontalOptions="EndAndExpand"
+                             VerticalOptions="EndAndExpand">
+
+                    </Image>
+                </Grid>
+
+                <Grid HeightRequest="80">
+
+                    <Image 
+                        Grid.ColumnSpan="2"
+                        Margin="12, 0, 12, 0"
+                                              
+                        Aspect="AspectFill"/>
+
+                    <Label
+                       Grid.ColumnSpan="2"
+                        Margin="12, 0, 0, 0"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        VerticalOptions="CenterAndExpand"
+                        HeightRequest="60"
+                        WidthRequest="90"
+                        FontSize="16"
+                        FontFamily="littleSide"
+                        Text="{Binding HoneyWords}"
+                        TextColor="#B38878"
+                        LineBreakMode="WordWrap"
+                        MaxLines="2">
+                    </Label>
+                </Grid>
+
+                <CollectionView x:Name = "diaries" 
+                                HorizontalOptions = "FillAndExpand"
+                                VerticalOptions="FillAndExpand"
+                                Margin="12, 8, 12, 20"
+                                ItemsSource = "{Binding DiaryCollection}" >
+                    <CollectionView.ItemTemplate >
+                        <DataTemplate >
+                            <Grid
+                                HeightRequest="120"
+                                Margin="8, 0, 0, 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="4"/>
+                                    <ColumnDefinition Width="8*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout>
+                                    <Label HeightRequest="35"
+                                           Margin="0, 20, 0, 0"
+                                           Text="{Binding Date, Converter={StaticResource DateToDay}}" 
+                                           TextColor="#B38878" 
+                                           FontFamily="littleSide" 
+                                           HorizontalOptions="CenterAndExpand" 
+                                           VerticalTextAlignment="Start" 
+                                           FontSize="24"/>
+                                    <Label HeightRequest="20" 
+                                           Text="{Binding Date, Converter={StaticResource DateToMonth}}"
+                                           FontFamily="littleSide"
+                                           TextColor="#B38878" 
+                                           HorizontalOptions="CenterAndExpand"
+                                           VerticalTextAlignment="Center" 
+                                           FontSize="18"/>
+                                    <Label HeightRequest="20" 
+                                           Text="{Binding Date, Converter={StaticResource DateToYear}}"
+                                           FontFamily="littleSide" 
+                                           TextColor="#B38878" 
+                                           HorizontalOptions="CenterAndExpand" 
+                                           VerticalTextAlignment="Start" 
+                                           FontSize="16"/>
+                                </StackLayout>
+
+                                <StackLayout Grid.Column="1">
+                                    <Line HeightRequest="20" BackgroundColor="#FFC0BE"/>
+                                    <Ellipse 
+                                         StrokeThickness="1"
+                                         WidthRequest="10"
+                                         HeightRequest="20"
+                                         HorizontalOptions="Center"
+                                         BackgroundColor="#B38878"/>
+                                    <Line HeightRequest="60" BackgroundColor="#FFC0BE"/>
+                                </StackLayout>
+
+
+                                <!--" Path Grid.Column="1"
+                                      BackgroundColor="Pink">
+                                    <Path.Data>
+                                        <GeometryGroup>
+                                            <LineGeometry />
+                                            <EllipseGeometry 
+                                                RadiusX="100"
+                                                RadiusY="100"
+                                                Center="30,30"/>
+                                            <LineGeometry />
+                                        </GeometryGroup>
+                                    </Path.Data>
+                                </Path-->
+
+                                <Frame 
+                                    Grid.Column="2"
+                                    HasShadow="True"
+                                    Margin="12, 0, 12, 0"
+                                    Padding="0"
+                                    CornerRadius="10"
+                                    HeightRequest="90"
+                                    VerticalOptions="CenterAndExpand">
+                                    <SwipeView>
+                                        <SwipeView.RightItems>
+                                            <SwipeItems>
+                                                <SwipeItem Text="删 除"
+                                                    BackgroundColor="#FF8B8B"
+                                                    Command="{Binding Source={x:Reference diaries},Path=BindingContext.DeleteDiaryCommand}"
+                                                    CommandParameter="{Binding}"/>
+                                                <SwipeItem Text="编 辑" 
+                                                    BackgroundColor="#63ACDD"
+                                                    Command="{Binding Source={x:Reference diaries},Path=BindingContext.EditDiaryNavigationCommand}"
+                                                    CommandParameter="{Binding}"/>
+                                            </SwipeItems >
+                                        </SwipeView.RightItems >
+
+                                        <Grid HeightRequest="120" HorizontalOptions="FillAndExpand" >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="3*"/>
+                                                <RowDefinition Height="4*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="8"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!--BoxView Grid.RowSpan="2" BackgroundColor="#F2A7BE" /-->
+                                            <Label 
+                                            Grid.Column="1"
+                                            VerticalTextAlignment="End"
+                                            FontSize="24"
+                                            TextColor="#FF8B8B"
+                                            FontFamily="littleSide"
+                                            Text="{Binding Title}"/>
+
+                                            <StackLayout 
+                                                Grid.Row="1" 
+                                                Grid.Column="1"
+                                                Margin="0, 0, 0, 12"
+                                                VerticalOptions="FillAndExpand" 
+                                                HorizontalOptions="FillAndExpand">
+                                                <Label Text="{Binding Content, Converter={StaticResource HtmlToString}}"
+                                                       FontSize="16"
+                                            FontFamily="littleSide"
+                                                   TextColor="#B38878" />
+                                            </StackLayout>
+                                        </Grid >
+                                    </SwipeView >
+                                </Frame>
+                            </Grid>
+                        </DataTemplate >
+                    </CollectionView.ItemTemplate >
+                    <CollectionView.Footer>
+                        <StackLayout Padding="8">
+                            <Label 
+                                Text="{Binding Status}"
+                                FontFamily="littleSide"
+                                TextColor="#B38878"
+                                HorizontalOptions="Center" />
+                        </StackLayout>
+                    </CollectionView.Footer>
+                </CollectionView >
+            </StackLayout>
+
+
+
+            <Image 
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0, 0, 20, 0"
+                HeightRequest="120"
+                WidthRequest="120"
+                Source="squirrel.gif" 
+                IsAnimationPlaying="true"/>
+
+            <ImageButton 
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0, 0, 20, 0" 
+                BackgroundColor="#00FFFFFF"
+                CornerRadius="20"
+                HorizontalOptions="EndAndExpand"
+                VerticalOptions="Center"
+                HeightRequest="120" 
+                WidthRequest="120" 
+                BorderWidth="0" 
+                Command="{Binding AddDiaryNavigationCommand}"/>
+            <!--ImageButton 
+                Grid.Row="1"
+                Grid.Column="1"
+                Source="add_circle_sharp.png"
+                Margin="0, 0, 12, 0" 
+                BackgroundColor="White"
+                CornerRadius="20"
+                HorizontalOptions="EndAndExpand"
+                VerticalOptions="Center"
+                HeightRequest="100" 
+                WidthRequest="100" 
+                BorderWidth="0"          
+                Command="{Binding AddDiaryNavigationCommand}">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Scale"
+                            Value="1" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale"
+                            Value="0.8" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <ImageButton.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="White"
+                                      Offset="0.10" />
+                        <GradientStop Color="#61BFAD"
+                                      Offset="0.60" />
+                        <GradientStop Color="#F9F7E8"
+                                      Offset="0.80" />
+                        <GradientStop Color="#00FF"
+                                      Offset="1.0" />
+                    </RadialGradientBrush>
+                </ImageButton.Background>
+            </ImageButton-->
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

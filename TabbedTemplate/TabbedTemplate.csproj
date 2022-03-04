@@ -1,0 +1,134 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>TabbedTemplate</AssemblyName>
+    <RootNamespace>TabbedTemplate</RootNamespace>
+    <ApplicationIcon></ApplicationIcon>
+    <Win32Resource />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="TabbedTemplate\**" />
+    <EmbeddedResource Remove="TabbedTemplate\**" />
+    <None Remove="TabbedTemplate\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="kuwords.sqlite3" />
+    <None Remove="memorialdays.sqlite3" />
+    <None Remove="Resources\background.png" />
+    <None Remove="Resources\blue.jpg" />
+    <None Remove="Resources\hearts.png" />
+    <None Remove="Resources\moon.jpg" />
+    <None Remove="Resources\pinkCloud.jpg" />
+    <None Remove="Resources\sea.jpg" />
+    <None Remove="Resources\snow.jpg" />
+    <None Remove="Resources\trees.png" />
+    <None Remove="Resources\whale.jpg" />
+    <None Remove="Resources\whiteCloud.jpg" />
+    <None Remove="sea.jpg" />
+    <None Remove="whale.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="alittleside.ttf" />
+    <EmbeddedResource Include="kuwords.sqlite3">
+      <LogicalName>kuwords.sqlite3</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="memorialdays.sqlite3">
+      <LogicalName>memorialdays.sqlite3</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\background.png" />
+    <EmbeddedResource Include="Resources\blue.jpg" />
+    <EmbeddedResource Include="Resources\hearts.png" />
+    <EmbeddedResource Include="Resources\moon.jpg" />
+    <EmbeddedResource Include="Resources\pinkCloud.jpg" />
+    <EmbeddedResource Include="Resources\sea.jpg" />
+    <EmbeddedResource Include="Resources\snow.jpg" />
+    <EmbeddedResource Include="Resources\trees.png" />
+    <EmbeddedResource Include="Resources\whale.jpg" />
+    <EmbeddedResource Include="Resources\whiteCloud.jpg" />
+    <EmbeddedResource Include="sea.jpg">
+    <LogicalName>sea.jpg</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="whale.jpg">
+    <LogicalName>whale.jpg</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Behaviors.Forms" Version="1.4.0" />
+    <PackageReference Include="DeferredEvents" Version="1.0.5" />
+    <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
+    <PackageReference Include="DotNetZip" Version="1.15.0" />
+    <PackageReference Include="Microsoft.Graph" Version="3.21.0" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.24.0" />
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Plugins.Forms.ButtonCircle" Version="2.0.3" />
+    <PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+    <PackageReference Include="SampleBrowser.Core" Version="19.1.0.54" />
+    <PackageReference Include="SharpZipLib" Version="1.3.2" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="2.80.3" />
+    <PackageReference Include="SkiaTextRenderer" Version="2.0.0" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.0-beta" />
+    <PackageReference Include="SQLiteNetExtensions" Version="2.1.0" />
+    <PackageReference Include="Syncfusion.Xamarin.DocIO" Version="19.1.0.69" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="19.1.0.67" />
+  
+    <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRichTextEditor" Version="19.1.0.54" />
+    <PackageReference Include="Xamanimation" Version="1.3.0" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1821" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />  
+    <PackageReference Include="Xamarin.Forms.Extended.InfiniteScrolling" Version="1.0.0-preview2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\AddMemorialDayPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DiaryDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\EditDiaryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FavoritePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MemorialDaysPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MemorialDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Page1.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ShareDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SyncPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="Renders\" />
+  </ItemGroup>
+</Project>

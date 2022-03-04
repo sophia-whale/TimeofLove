@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:graph="clr-namespace:Microsoft.Graph;assembly=Microsoft.Graph"
+             x:Class="TabbedTemplate.Views.AddMemorialDayPage"
+             BindingContext="{Binding AddMemorialDayViewModel, Source={StaticResource ViewModelLocator}}"
+             Title="添加纪念日">
+
+    <ContentPage.Content>
+        <Grid Padding="20,30,20,20"
+              BackgroundColor="#F9F7E8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="6*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="9*" />
+            </Grid.ColumnDefinitions>
+
+            <Image
+                Source="tag.png"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center"
+                HeightRequest="30" 
+                WidthRequest="30" />
+            <Entry 
+                Grid.Column="1"
+                ClearButtonVisibility="WhileEditing"
+                HorizontalOptions="FillAndExpand"
+                Placeholder="纪念日名称"
+                FontSize="18"
+                StyleClass="TitleStyle"
+                FontFamily="littleSide"
+                Text="{Binding Title}"  
+                x:Name="TitleEntry"/>
+
+            <Image 
+                Grid.Row="1"
+                Grid.Column="0"
+                Source="calendar.png"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center"
+                HeightRequest="30" 
+                WidthRequest="30" />
+
+            <DatePicker 
+                Grid.Row="1"
+                Grid.Column="1"
+                x:Name="DatePicker"
+                FontFamily="littleSide"
+                Date="{Binding DateTime}"></DatePicker>
+
+            <Button 
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="20, 0, 20, 0"
+                BackgroundColor="#63ACDD" 
+                WidthRequest="300"
+                HeightRequest="60"
+                CornerRadius="5"
+                Text="完  成" 
+                FontSize="24"
+                FontFamily="littleSide"
+                FontAttributes="Bold"
+                TextColor="White"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                Clicked="Button_Click"
+                Command="{Binding AddMemorialDayCommand}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
+
+

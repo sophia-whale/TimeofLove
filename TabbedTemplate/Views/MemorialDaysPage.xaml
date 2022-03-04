@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:s="clr-namespace:Xamarin.Forms.Extended;assembly=Xamarin.Forms.Extended.InfiniteScrolling"
+             x:Class="TabbedTemplate.Views.MemorialDaysPage"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:converters="clr-namespace:TabbedTemplate.Converters;assembly=TabbedTemplate"
+             xmlns:tabbedTemplate="clr-namespace:TabbedTemplate;assembly=TabbedTemplate"
+             NavigationPage.HasNavigationBar="false"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
+             BindingContext="{Binding  MemorialDaysViewModel,Source={StaticResource ViewModelLocator}}">
+
+    <ContentPage.Behaviors>
+        <behaviors:EventHandlerBehavior EventName="Appearing">
+            <behaviors:ActionCollection>
+                <behaviors:InvokeCommandAction Command="{Binding PageAppearingCommand}" />
+            </behaviors:ActionCollection>
+        </behaviors:EventHandlerBehavior>
+    </ContentPage.Behaviors>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xamanimation:HeartAnimation
+                x:Key="HeartAnimation"
+                Target="{x:Reference Heart}"/>
+            <converters:ItemTappedEventArgsToMemorialDayConverter x:Key="ItemToMemorialDay"/>
+            <converters:DayToDurationConverter x:Key="DayToDuration"/>
+            <!--converters:ConfigurableBoolConverter x:Key="BackgroundColorConverter"
+                                                 x:TypeArguments="x:String"
+                                                 TrueResult="Color.LightGray"
+                                                 FalseResult="Color.Transparent"/-->
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <Grid BackgroundColor="#F9F7E8">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackLayout
+                Grid.Row="0"
+                Grid.RowSpan="3"
+                Grid.ColumnSpan="2"
+                Margin="0,10,0,0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1"
+                            HorizontalOptions="Start" 
+                            VerticalOptions="Start" 
+                            Text="恋 爱 时 光" 
+                            TextColor="#FF8B8B"
+                            FontFamily="littleSide"
+                            BackgroundColor="#F9F7E8"
+                            HeightRequest="50"
+                            FontSize="32">
+                        <Button.Triggers>
+                            <EventTrigger Event="Clicked">
+                                <xamanimation:BeginAnimation
+                                    Animation="{StaticResource HeartAnimation}" />
+                            </EventTrigger>
+                        </Button.Triggers>
+                    </Button>
+                    <Image
+                        Grid.Column="0"
+                        x:Name="Heart"
+                        WidthRequest="40"
+                        Source="heart.png"
+                        HorizontalOptions="EndAndExpand"
+                        VerticalOptions="EndAndExpand">
+
+                    </Image>
+                </Grid>
+                <!--<Image 
+                Grid.RowSpan="4" 
+                Grid.ColumnSpan="2"
+                HorizontalOptions="FillAndExpand" 
+                VerticalOptions="FillAndExpand" 
+                Aspect="AspectFill" 
+                Source="pinkLine.png" />-->
+                <CarouselView ItemsSource="{Binding ThatYearMemorialDay}"
+                      HeightRequest="140" WidthRequest="360" IndicatorView="indicatorView">
+                    <CarouselView.EmptyView>
+                        <ContentView>
+                            <StackLayout HorizontalOptions="CenterAndExpand"
+                                             VerticalOptions="CenterAndExpand">
+                                <Frame BorderColor="#FF8B8B"
+                                           CornerRadius="10"
+                                           WidthRequest="360"
+                                           HeightRequest="140"
+                                           Margin="20"
+                                           HasShadow="True"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="CenterAndExpand">
+                                    <Label Text="往年的今天没有什么重要的日子."
+                                           Margin="10,25,10,10"
+                                           FontAttributes="Bold"
+                                           FontSize="18"
+                                           TextColor="#B38878"
+                                           FontFamily="littleSide"
+                                           HorizontalOptions="Fill"
+                                           HorizontalTextAlignment="Center" />
+                                </Frame>
+                            </StackLayout>
+                        </ContentView>
+                    </CarouselView.EmptyView>
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Frame HasShadow="True"
+                               BorderColor="#FF8B8B"
+                               CornerRadius="10"
+                               HeightRequest="140"
+                               WidthRequest="360"
+                               Margin="20"
+                               HorizontalOptions="Center"
+                               VerticalOptions="CenterAndExpand">
+                                    <StackLayout>
+                                        <Label Text="{Binding StartDate}" 
+                                       FontAttributes="Bold"
+                                       FontSize="16"
+                                       TextColor="#B38878"
+                                       FontFamily="littleSide"
+                                       HorizontalOptions="Start"
+                                       VerticalOptions="Start" />
+
+                                        <Label Text="{Binding Title}"
+                                               FontSize="20"
+                                               FontFamily="littleSide"
+                                               FontAttributes="Bold"
+                                               TextColor="#B38878"
+                                       HorizontalOptions="Center" />
+
+                                    </StackLayout>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <IndicatorView x:Name="indicatorView"
+                       IndicatorsShape="Square"
+                       IndicatorColor="LightGray"
+                       SelectedIndicatorColor="DarkGray"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,0" />
+
+                <ListView 
+                Margin="8, 20, 8, 0"
+                x:Name="ListViewEvent"
+                RowHeight="60"
+                SelectionMode="None"
+                ItemsSource="{Binding MemorialDaysCollection}">
+                    <ListView.Behaviors>
+                        <s:InfiniteScrollBehavior />
+                        <behaviors:EventHandlerBehavior EventName="ItemTapped">
+                            <behaviors:ActionCollection>
+                                <behaviors:InvokeCommandAction
+                                Command="{Binding MemorialDayTappedCommand}"
+                                Converter="{StaticResource ItemToMemorialDay}"/>
+                            </behaviors:ActionCollection>
+                        </behaviors:EventHandlerBehavior>
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate >
+                            <ViewCell >
+                                <Frame   CornerRadius="40" HeightRequest="80" Margin="0, 0, 0, 8" Padding="0, 8, 0, 0" BorderColor="#FF8B8B" HasShadow="True" >
+                                    <Grid Margin="8, 0, 0, 8" HorizontalOptions="FillAndExpand" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="6*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0"   FontFamily="littleSide" TextColor="#B38878" Margin="8, 0, 0, 0" Text="{Binding Title}"  FontSize="20" VerticalTextAlignment="Center"/>
+                                        <Label Grid.Column="1"  FontFamily="littleSide" Text="{Binding StartDate , Converter={StaticResource DayToDuration }}" TextColor="White" FontAttributes="Bold" FontSize="22" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="#FF8B8B"/>
+                                        <Label Grid.Column="2"  FontFamily="littleSide" Margin="8, 0, 10, 0" Text="天" TextColor="#B38878"  FontAttributes="Bold" FontSize="20" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+                                    </Grid>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+
+                    </ListView.ItemTemplate>
+                    <ListView.Footer>
+                        <StackLayout Padding="8">
+                            <Label 
+                            Text="{Binding Status}"
+                            TextColor="#B38878" 
+                            FontFamily="littleSide" 
+                            HorizontalOptions="Center" />
+
+                        </StackLayout>
+                    </ListView.Footer>
+                </ListView>
+            </StackLayout>
+            <ImageButton 
+                Grid.Row="1"
+                Grid.Column="1"
+                Source="add_circle_sharp.png"
+                Margin="0, 0, 12, 0" 
+                BackgroundColor="White"
+                CornerRadius="20"
+                HorizontalOptions="EndAndExpand"
+                VerticalOptions="Center"
+                HeightRequest="60" 
+                WidthRequest="60" 
+                BorderWidth="0"          
+                Command="{Binding AddMemorialDayNavigationCommand }">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="Scale"
+                                        Value="1" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="Scale"
+                                        Value="0.8" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <ImageButton.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="White"
+                                      Offset="0.10" />
+                        <GradientStop Color="#61BFAD"
+                                      Offset="0.70" />
+                        <GradientStop Color="#F9F7E8"
+                                      Offset="0.80" />
+                        <GradientStop Color="#00FF"
+                                      Offset="1.0" />
+                    </RadialGradientBrush>
+                </ImageButton.Background>
+            </ImageButton>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>
