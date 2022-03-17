@@ -35,7 +35,7 @@ namespace TabbedTemplate.UnitTest.ViewModels
                 memorialDaysList.Add(new MemorialDay() { Id = i, IsDeleted = 0,StartDate = "05/07/2021"});
             }
 
-            string todayDate = DateTime.Now.ToString("dd/MM/yyyy");
+            string todayDate = DateTime.Now.ToString("MM/dd/yyyy");
             var todayMemorialDay = new MemorialDay() {
                 Id = 2, IsDeleted = 0, StartDate = todayDate,
             };

@@ -27,7 +27,7 @@ namespace TabbedTemplate.Converters
             {
                 return "今天刚刚成功地同步过";
             }
-            else if (timeSpan.Days < 100)
+            else if (timeSpan.Days < 1000)
             {
                 return $"距离上一次成功同步已经有{timeSpan.Days}天。";
             }

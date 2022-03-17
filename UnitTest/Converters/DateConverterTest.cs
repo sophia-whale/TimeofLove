@@ -32,7 +32,7 @@ namespace TabbedTemplate.UnitTest.Converters
             string date = "08/07/2021";
             var dateToMonthConverter = new DateToMonthConverter();
             string month = (string)dateToMonthConverter.Convert(date, null, null, null);
-            Assert.AreEqual("07月", month);
+            Assert.AreEqual("08月", month);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace TabbedTemplate.UnitTest.Converters
             string date = "08/07/2021";
             var dateToDayConverter = new DateToDayConverter();
             string day = (string)dateToDayConverter.Convert(date, null, null, null);
-            Assert.AreEqual("08日", day);
+            Assert.AreEqual("07日", day);
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace TabbedTemplate.UnitTest.Converters
         {
             string b = "08/07/2021";
             DateTimeFormatInfo format = new DateTimeFormatInfo();
-            format.ShortDatePattern = "dd/MM/yyyy";
+            format.ShortDatePattern = "MM/dd/yyyy";
             DateTime old = System.Convert.ToDateTime(b, format);
             TimeSpan ts = DateTime.Now - old;
             var dayToDurationConverter = new DayToDurationConverter();
